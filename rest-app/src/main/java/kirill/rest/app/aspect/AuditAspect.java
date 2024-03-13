@@ -44,11 +44,8 @@ public class AuditAspect {
             String methodName = joinPoint.getSignature().getName();   
     	    ResponseEntity<?> responseEntity = (ResponseEntity<?>) result;
     	    HttpStatusCode statusCode = responseEntity.getStatusCode();
-    	    if (statusCode.equals(HttpStatus.FORBIDDEN)) {
-    	        auditService.createAuditRecord(user, username, methodName, false);
-    	    }else {
-    	        auditService.createAuditRecord(user, username, methodName, true);
-    	    }
+    	    boolean success = statusCode != HttpStatus.FORBIDDEN;
+            auditService.createAuditRecord(user, username, methodName, success);
     	}
     }
     

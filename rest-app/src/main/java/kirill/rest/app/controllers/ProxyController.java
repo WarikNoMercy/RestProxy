@@ -1,6 +1,7 @@
 package kirill.rest.app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -25,18 +26,22 @@ import org.springframework.http.HttpEntity;
 @RequestMapping("/api")
 public class ProxyController {
 
-	@Autowired
 	private RestTemplate restTemplate;
 	
-	@Autowired
-	private AppService service;
+	private AppService appService;
 	
-
-	private final String BASE_URL = "https://jsonplaceholder.typicode.com";
+	@Autowired
+	public ProxyController(RestTemplate restTemplate, AppService appService) {
+		this.restTemplate = restTemplate;
+		this.appService = appService;
+	}
+	
+	@Value("${spring.host.url}")
+	private String BASE_URL;
 
 	@PostMapping("/new-user")
 	public User addUser(@RequestBody User user) {
-		service.addUser(user);
+		appService.addUser(user);
 		return user;
 	}
 	

@@ -39,13 +39,13 @@ public class AuditAspect {
     		return;
     	}else if (result instanceof ResponseEntity){
     		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String username = authentication != null ? authentication.getName() : "anonymous";
-            User user = userRepository.findByUsername(username).get();
-            String methodName = joinPoint.getSignature().getName();   
+String username = authentication != null ? authentication.getName() : "anonymous";
+User user = userRepository.findByUsername(username).get();
+String methodName = joinPoint.getSignature().getName();   
     	    ResponseEntity<?> responseEntity = (ResponseEntity<?>) result;
     	    HttpStatusCode statusCode = responseEntity.getStatusCode();
     	    boolean success = statusCode != HttpStatus.FORBIDDEN;
-            auditService.createAuditRecord(user, username, methodName, success);
+auditService.createAuditRecord(user, username, methodName, success);
     	}
     }
     

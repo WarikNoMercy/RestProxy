@@ -37,10 +37,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		appService.setPasswordEncoder(passwordEncoder());
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/new-user","/actuator/caches").permitAll()
-                .requestMatchers("/api/**","/**").authenticated())
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                .build();
+    .authorizeHttpRequests(auth -> auth.requestMatchers("/api/new-user","/actuator/caches").permitAll()
+    .requestMatchers("/api/**","/**").authenticated())
+    .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+    .build();
     }
 	
 	@Bean
